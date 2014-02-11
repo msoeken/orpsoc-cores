@@ -42,7 +42,7 @@ module orpsoc_top #(
 	input		rst_n_pad_i,
 
 	output	[9:0]	led_r_pad_o,
-	inout	[7:0]	gpio0_io,
+	inout	[7:0]	green_leds_io,
 
 `ifdef SIM
 	output		tdo_pad_o,
@@ -582,83 +582,83 @@ wb_data_resize wb_data_resize_uart0 (
 //
 ////////////////////////////////////////////////////////////////////////
 
-wire [7:0]	gpio0_in;
-wire [7:0]	gpio0_out;
-wire [7:0]	gpio0_dir;
+wire [7:0]	green_leds_in;
+wire [7:0]	green_leds_out;
+wire [7:0]	green_leds_dir;
 
-wire [31:0]	wb8_m2s_gpio0_adr;
-wire [1:0]	wb8_m2s_gpio0_bte;
-wire [2:0]	wb8_m2s_gpio0_cti;
-wire		wb8_m2s_gpio0_cyc;
-wire [7:0]	wb8_m2s_gpio0_dat;
-wire		wb8_m2s_gpio0_stb;
-wire		wb8_m2s_gpio0_we;
-wire [7:0] 	wb8_s2m_gpio0_dat;
-wire		wb8_s2m_gpio0_ack;
-wire		wb8_s2m_gpio0_err;
-wire		wb8_s2m_gpio0_rty;
+wire [31:0]	wb8_m2s_green_leds_adr;
+wire [1:0]	wb8_m2s_green_leds_bte;
+wire [2:0]	wb8_m2s_green_leds_cti;
+wire		wb8_m2s_green_leds_cyc;
+wire [7:0]	wb8_m2s_green_leds_dat;
+wire		wb8_m2s_green_leds_stb;
+wire		wb8_m2s_green_leds_we;
+wire [7:0] 	wb8_s2m_green_leds_dat;
+wire		wb8_s2m_green_leds_ack;
+wire		wb8_s2m_green_leds_err;
+wire		wb8_s2m_green_leds_rty;
 
 // Tristate logic for IO
 // 0 = input, 1 = output
 genvar                    i;
 generate
-	for (i = 0; i < 8; i = i+1) begin: gpio0_tris
-		assign gpio0_io[i] = gpio0_dir[i] ? gpio0_out[i] : 1'bz;
-		assign gpio0_in[i] = gpio0_dir[i] ? gpio0_out[i] : gpio0_io[i];
+	for (i = 0; i < 8; i = i+1) begin: green_leds_tris
+		assign green_leds_io[i] = green_leds_dir[i] ? green_leds_out[i] : 1'bz;
+		assign green_leds_in[i] = green_leds_dir[i] ? green_leds_out[i] : green_leds_io[i];
 	end
 endgenerate
 
-gpio gpio0 (
+gpio green_leds (
 	// GPIO bus
-	.gpio_i		(gpio0_in),
-	.gpio_o		(gpio0_out),
-	.gpio_dir_o	(gpio0_dir),
+	.gpio_i		(green_leds_in),
+	.gpio_o		(green_leds_out),
+	.gpio_dir_o	(green_leds_dir),
 
 	// Wishbone slave interface
-	.wb_adr_i	(wb8_m2s_gpio0_adr[0]),
-	.wb_dat_i	(wb8_m2s_gpio0_dat),
-	.wb_we_i	(wb8_m2s_gpio0_we),
-	.wb_cyc_i	(wb8_m2s_gpio0_cyc),
-	.wb_stb_i	(wb8_m2s_gpio0_stb),
-	.wb_cti_i	(wb8_m2s_gpio0_cti),
-	.wb_bte_i	(wb8_m2s_gpio0_bte),
-	.wb_dat_o	(wb8_s2m_gpio0_dat),
-	.wb_ack_o	(wb8_s2m_gpio0_ack),
-	.wb_err_o	(wb8_s2m_gpio0_err),
-	.wb_rty_o	(wb8_s2m_gpio0_rty),
+	.wb_adr_i	(wb8_m2s_green_leds_adr[0]),
+	.wb_dat_i	(wb8_m2s_green_leds_dat),
+	.wb_we_i	(wb8_m2s_green_leds_we),
+	.wb_cyc_i	(wb8_m2s_green_leds_cyc),
+	.wb_stb_i	(wb8_m2s_green_leds_stb),
+	.wb_cti_i	(wb8_m2s_green_leds_cti),
+	.wb_bte_i	(wb8_m2s_green_leds_bte),
+	.wb_dat_o	(wb8_s2m_green_leds_dat),
+	.wb_ack_o	(wb8_s2m_green_leds_ack),
+	.wb_err_o	(wb8_s2m_green_leds_err),
+	.wb_rty_o	(wb8_s2m_green_leds_rty),
 
 	.wb_clk		(wb_clk),
 	.wb_rst		(wb_rst)
 );
 
 // 32-bit to 8-bit wishbone bus resize
-wb_data_resize wb_data_resize_gpio0 (
+wb_data_resize wb_data_resize_green_leds (
 	// Wishbone Master interface
-	.wbm_adr_i	(wb_m2s_gpio0_adr),
-	.wbm_dat_i	(wb_m2s_gpio0_dat),
-	.wbm_sel_i	(wb_m2s_gpio0_sel),
-	.wbm_we_i	(wb_m2s_gpio0_we ),
-	.wbm_cyc_i	(wb_m2s_gpio0_cyc),
-	.wbm_stb_i	(wb_m2s_gpio0_stb),
-	.wbm_cti_i	(wb_m2s_gpio0_cti),
-	.wbm_bte_i	(wb_m2s_gpio0_bte),
-	.wbm_dat_o	(wb_s2m_gpio0_dat),
-	.wbm_ack_o	(wb_s2m_gpio0_ack),
-	.wbm_err_o	(wb_s2m_gpio0_err),
-	.wbm_rty_o	(wb_s2m_gpio0_rty),
+	.wbm_adr_i	(wb_m2s_green_leds_adr),
+	.wbm_dat_i	(wb_m2s_green_leds_dat),
+	.wbm_sel_i	(wb_m2s_green_leds_sel),
+	.wbm_we_i	(wb_m2s_green_leds_we ),
+	.wbm_cyc_i	(wb_m2s_green_leds_cyc),
+	.wbm_stb_i	(wb_m2s_green_leds_stb),
+	.wbm_cti_i	(wb_m2s_green_leds_cti),
+	.wbm_bte_i	(wb_m2s_green_leds_bte),
+	.wbm_dat_o	(wb_s2m_green_leds_dat),
+	.wbm_ack_o	(wb_s2m_green_leds_ack),
+	.wbm_err_o	(wb_s2m_green_leds_err),
+	.wbm_rty_o	(wb_s2m_green_leds_rty),
 
 	// Wishbone Slave interface
-	.wbs_adr_o	(wb8_m2s_gpio0_adr),
-	.wbs_dat_o	(wb8_m2s_gpio0_dat),
-	.wbs_we_o	(wb8_m2s_gpio0_we ),
-	.wbs_cyc_o	(wb8_m2s_gpio0_cyc),
-	.wbs_stb_o	(wb8_m2s_gpio0_stb),
-	.wbs_cti_o	(wb8_m2s_gpio0_cti),
-	.wbs_bte_o	(wb8_m2s_gpio0_bte),
-	.wbs_dat_i	(wb8_s2m_gpio0_dat),
-	.wbs_ack_i	(wb8_s2m_gpio0_ack),
-	.wbs_err_i	(wb8_s2m_gpio0_err),
-	.wbs_rty_i	(wb8_s2m_gpio0_rty)
+	.wbs_adr_o	(wb8_m2s_green_leds_adr),
+	.wbs_dat_o	(wb8_m2s_green_leds_dat),
+	.wbs_we_o	(wb8_m2s_green_leds_we ),
+	.wbs_cyc_o	(wb8_m2s_green_leds_cyc),
+	.wbs_stb_o	(wb8_m2s_green_leds_stb),
+	.wbs_cti_o	(wb8_m2s_green_leds_cti),
+	.wbs_bte_o	(wb8_m2s_green_leds_bte),
+	.wbs_dat_i	(wb8_s2m_green_leds_dat),
+	.wbs_ack_i	(wb8_s2m_green_leds_ack),
+	.wbs_err_i	(wb8_s2m_green_leds_err),
+	.wbs_rty_i	(wb8_s2m_green_leds_rty)
 );
 
 ////////////////////////////////////////////////////////////////////////
