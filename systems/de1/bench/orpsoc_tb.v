@@ -143,7 +143,7 @@ orpsoc_top dut
 	.rst_n_pad_i		(rst_n),
 
 	.led_r_pad_o		(),
-	.gpio0_io		(),
+	.green_leds_io		(),
 
 	.tms_pad_i		(tms),
 	.tck_pad_i		(tck),
