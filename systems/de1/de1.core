@@ -15,6 +15,7 @@ depend =
  mt48lc16m16a2
  gpio
  altera_virtual_jtag
+ wb_seven_segment
 
 simulators =
  icarus

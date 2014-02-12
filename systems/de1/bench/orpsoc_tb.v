@@ -144,6 +144,10 @@ orpsoc_top dut
 
 	.red_leds_io  		(),
 	.green_leds_io		(),
+  .hex0             (),
+  .hex1             (),
+  .hex2             (),
+  .hex3             (),
 
 	.tms_pad_i		(tms),
 	.tck_pad_i		(tck),
