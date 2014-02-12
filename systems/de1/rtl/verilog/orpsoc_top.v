@@ -41,7 +41,7 @@ module orpsoc_top #(
 	input		sys_clk_pad_i,
 	input		rst_n_pad_i,
 
-	inout	[9:0]	red_leds_io,
+	inout	[7:0]	red_leds_io,
 	inout	[7:0]	green_leds_io,
 
 `ifdef SIM
