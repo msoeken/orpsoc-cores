@@ -1,0 +1,14 @@
+CAPI=1
+[main]
+description = "OpenCores ps2core"
+
+[verilog]
+src_files =
+ ps2.vhd
+ ps2_wishbone.vhd
+
+[provider]
+name = opencores
+repo_name = ps2core
+repo_root = trunk/rtl/vhdl
+revision = 6

@@ -210,3 +210,9 @@ set_location_assignment PIN_F3 -to hex3[5]
 set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to hex3[5]
 set_location_assignment PIN_D4 -to hex3[6]
 set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to hex3[6]
+
+# PS/2
+set_location_assignment PIN_H15 -to PS2_CLK
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to PS2_CLK
+set_location_assignment PIN_J14 -to PS2_DAT
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to PS2_DAT

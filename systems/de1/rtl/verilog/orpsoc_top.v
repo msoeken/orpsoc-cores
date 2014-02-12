@@ -54,6 +54,9 @@ module orpsoc_top #(
   input         tms_pad_i,
   input         tck_pad_i,
   input         tdi_pad_i,
+`else
+  inout         PS2_CLK,
+  inout         PS2_DAT,
 `endif
 
   output [1:0]  sdram_ba_pad_o,
@@ -824,6 +827,76 @@ wb_data_resize wb_data_resize_hex (
 
 ////////////////////////////////////////////////////////////////////////
 //
+// PS/2
+//
+////////////////////////////////////////////////////////////////////////
+
+`ifdef SIM
+`else
+   wire ps2_irq;
+
+   wire [31:0]  wb8_m2s_ps2_adr;
+   wire [1:0]   wb8_m2s_ps2_bte;
+   wire [2:0]   wb8_m2s_ps2_cti;
+   wire         wb8_m2s_ps2_cyc;
+   wire [7:0]   wb8_m2s_ps2_dat;
+   wire         wb8_m2s_ps2_stb;
+   wire         wb8_m2s_ps2_we;
+   wire [7:0]   wb8_s2m_ps2_dat;
+   wire         wb8_s2m_ps2_ack;
+   wire         wb8_s2m_ps2_err;
+   wire         wb8_s2m_ps2_rty;
+
+   ps2_wb ps2_wb0 (
+      .wb_clk_i(wb_clk),
+      .wb_rst_i(wb_rst),
+      .wb_dat_i(wb8_m2s_ps2_dat),
+      .wb_dat_o(wb8_s2m_ps2_dat),
+      .wb_adr_i(wb8_m2s_ps2_adr[0]),
+      .wb_stb_i(wb8_m2s_ps2_stb),
+      .wb_we_i(wb8_m2s_ps2_we),
+      .wb_ack_o(wb8_s2m_ps2_ack),
+      .irq_o(ps2_irq),
+      .ps2_clk(PS2_CLK),
+      .ps2_dat(PS2_DAT)
+   );
+
+   assign wb8_s2m_ps2_err = 0;
+   assign wb8_s2m_ps2_rty = 0;
+
+   // 32-bit to 8-bit wishbone bus resize
+wb_data_resize wb_data_resize_ps2 (
+        // Wishbone Master interface
+        .wbm_adr_i      (wb_m2s_ps2_adr),
+        .wbm_dat_i      (wb_m2s_ps2_dat),
+        .wbm_sel_i      (wb_m2s_ps2_sel),
+        .wbm_we_i       (wb_m2s_ps2_we ),
+        .wbm_cyc_i      (wb_m2s_ps2_cyc),
+        .wbm_stb_i      (wb_m2s_ps2_stb),
+        .wbm_cti_i      (wb_m2s_ps2_cti),
+        .wbm_bte_i      (wb_m2s_ps2_bte),
+        .wbm_dat_o      (wb_s2m_ps2_dat),
+        .wbm_ack_o      (wb_s2m_ps2_ack),
+        .wbm_err_o      (wb_s2m_ps2_err),
+        .wbm_rty_o      (wb_s2m_ps2_rty),
+
+        // Wishbone Slave interface
+        .wbs_adr_o      (wb8_m2s_ps2_adr),
+        .wbs_dat_o      (wb8_m2s_ps2_dat),
+        .wbs_we_o       (wb8_m2s_ps2_we ),
+        .wbs_cyc_o      (wb8_m2s_ps2_cyc),
+        .wbs_stb_o      (wb8_m2s_ps2_stb),
+        .wbs_cti_o      (wb8_m2s_ps2_cti),
+        .wbs_bte_o      (wb8_m2s_ps2_bte),
+        .wbs_dat_i      (wb8_s2m_ps2_dat),
+        .wbs_ack_i      (wb8_s2m_ps2_ack),
+        .wbs_err_i      (wb8_s2m_ps2_err),
+        .wbs_rty_i      (wb8_s2m_ps2_rty)
+);
+`endif
+
+////////////////////////////////////////////////////////////////////////
+//
 // Interrupt assignment
 //
 ////////////////////////////////////////////////////////////////////////
@@ -831,7 +904,11 @@ wb_data_resize wb_data_resize_hex (
 assign or1k_irq[0] = 0; // Non-maskable inside OR1K
 assign or1k_irq[1] = 0; // Non-maskable inside OR1K
 assign or1k_irq[2] = uart0_irq;
+`ifdef SIM
 assign or1k_irq[3] = 0;
+`else
+assign or1k_irq[3] = ps2_irq;
+`endif
 assign or1k_irq[4] = 0;
 assign or1k_irq[5] = 0;
 assign or1k_irq[6] = 0;

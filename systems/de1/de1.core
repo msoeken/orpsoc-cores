@@ -16,6 +16,7 @@ depend =
  gpio
  altera_virtual_jtag
  wb_seven_segment
+ ps2core
 
 simulators =
  icarus
