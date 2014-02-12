@@ -1,0 +1,6 @@
+CAPI=1
+[main]
+description = Simple core for four seven segment displays core
+
+[verilog]
+src_files = hex_wb.v
