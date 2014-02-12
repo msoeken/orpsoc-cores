@@ -216,3 +216,29 @@ set_location_assignment PIN_H15 -to PS2_CLK
 set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to PS2_CLK
 set_location_assignment PIN_J14 -to PS2_DAT
 set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to PS2_DAT
+
+# Raspberry
+# IO_B6
+set_location_assignment PIN_F15 -to raspberry_io[0]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to raspberry_io[0]
+# IO_B7
+set_location_assignment PIN_G16 -to raspberry_io[1]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to raspberry_io[1]
+# IO_B8
+set_location_assignment PIN_F12 -to raspberry_io[2]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to raspberry_io[2]
+# IO_B9
+set_location_assignment PIN_F13 -to raspberry_io[3]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to raspberry_io[3]
+# IO_B10
+set_location_assignment PIN_C14 -to raspberry_io[4]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to raspberry_io[4]
+# IO_B11
+set_location_assignment PIN_D14 -to raspberry_io[5]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to raspberry_io[5]
+# IO_B12
+set_location_assignment PIN_D15 -to raspberry_io[6]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to raspberry_io[7]
+# IO_B13
+set_location_assignment PIN_D16 -to raspberry_io[7]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to raspberry_io[7]
