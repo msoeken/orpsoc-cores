@@ -149,6 +149,7 @@ orpsoc_top dut
   .hex2             (),
   .hex3             (),
   .raspberry_io     (),
+  .arduino_io       (),
 
 	.tms_pad_i		(tms),
 	.tck_pad_i		(tck),

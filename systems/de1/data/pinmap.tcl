@@ -242,3 +242,29 @@ set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to raspberry_io[7]
 # IO_B13
 set_location_assignment PIN_D16 -to raspberry_io[7]
 set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to raspberry_io[7]
+
+# Arduino
+# IO_A11
+set_location_assignment PIN_B18 -to arduino_io[0]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to arduino_io[0]
+# IO_A13
+set_location_assignment PIN_B19 -to arduino_io[1]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to arduino_io[1]
+# IO_A15
+set_location_assignment PIN_B20 -to arduino_io[2]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to arduino_io[2]
+# IO_A17
+set_location_assignment PIN_C22 -to arduino_io[3]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to arduino_io[3]
+# IO_A19
+set_location_assignment PIN_D22 -to arduino_io[4]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to arduino_io[4]
+# IO_A21
+set_location_assignment PIN_E22 -to arduino_io[5]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to arduino_io[5]
+# IO_A23
+set_location_assignment PIN_F22 -to arduino_io[6]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to arduino_io[6]
+# IO_A25
+set_location_assignment PIN_G22 -to arduino_io[7]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to arduino_io[7]

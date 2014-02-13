@@ -1,15 +1,3 @@
-wire [31:0] wb_m2s_or1k_d_adr;
-wire [31:0] wb_m2s_or1k_d_dat;
-wire  [3:0] wb_m2s_or1k_d_sel;
-wire        wb_m2s_or1k_d_we;
-wire        wb_m2s_or1k_d_cyc;
-wire        wb_m2s_or1k_d_stb;
-wire  [2:0] wb_m2s_or1k_d_cti;
-wire  [1:0] wb_m2s_or1k_d_bte;
-wire [31:0] wb_s2m_or1k_d_dat;
-wire        wb_s2m_or1k_d_ack;
-wire        wb_s2m_or1k_d_err;
-wire        wb_s2m_or1k_d_rty;
 wire [31:0] wb_m2s_dbg_adr;
 wire [31:0] wb_m2s_dbg_dat;
 wire  [3:0] wb_m2s_dbg_sel;
@@ -22,6 +10,18 @@ wire [31:0] wb_s2m_dbg_dat;
 wire        wb_s2m_dbg_ack;
 wire        wb_s2m_dbg_err;
 wire        wb_s2m_dbg_rty;
+wire [31:0] wb_m2s_or1k_d_adr;
+wire [31:0] wb_m2s_or1k_d_dat;
+wire  [3:0] wb_m2s_or1k_d_sel;
+wire        wb_m2s_or1k_d_we;
+wire        wb_m2s_or1k_d_cyc;
+wire        wb_m2s_or1k_d_stb;
+wire  [2:0] wb_m2s_or1k_d_cti;
+wire  [1:0] wb_m2s_or1k_d_bte;
+wire [31:0] wb_s2m_or1k_d_dat;
+wire        wb_s2m_or1k_d_ack;
+wire        wb_s2m_or1k_d_err;
+wire        wb_s2m_or1k_d_rty;
 wire [31:0] wb_m2s_or1k_i_adr;
 wire [31:0] wb_m2s_or1k_i_dat;
 wire  [3:0] wb_m2s_or1k_i_sel;
@@ -106,6 +106,18 @@ wire [31:0] wb_s2m_green_leds_dat;
 wire        wb_s2m_green_leds_ack;
 wire        wb_s2m_green_leds_err;
 wire        wb_s2m_green_leds_rty;
+wire [31:0] wb_m2s_arduino_adr;
+wire [31:0] wb_m2s_arduino_dat;
+wire  [3:0] wb_m2s_arduino_sel;
+wire        wb_m2s_arduino_we;
+wire        wb_m2s_arduino_cyc;
+wire        wb_m2s_arduino_stb;
+wire  [2:0] wb_m2s_arduino_cti;
+wire  [1:0] wb_m2s_arduino_bte;
+wire [31:0] wb_s2m_arduino_dat;
+wire        wb_s2m_arduino_ack;
+wire        wb_s2m_arduino_err;
+wire        wb_s2m_arduino_rty;
 wire [31:0] wb_m2s_hex_adr;
 wire [31:0] wb_m2s_hex_dat;
 wire  [3:0] wb_m2s_hex_sel;
@@ -146,18 +158,6 @@ wire        wb_s2m_rom0_rty;
 wb_intercon wb_intercon0
    (.wb_clk_i            (wb_clk),
     .wb_rst_i            (wb_rst),
-    .wb_or1k_d_adr_i     (wb_m2s_or1k_d_adr),
-    .wb_or1k_d_dat_i     (wb_m2s_or1k_d_dat),
-    .wb_or1k_d_sel_i     (wb_m2s_or1k_d_sel),
-    .wb_or1k_d_we_i      (wb_m2s_or1k_d_we),
-    .wb_or1k_d_cyc_i     (wb_m2s_or1k_d_cyc),
-    .wb_or1k_d_stb_i     (wb_m2s_or1k_d_stb),
-    .wb_or1k_d_cti_i     (wb_m2s_or1k_d_cti),
-    .wb_or1k_d_bte_i     (wb_m2s_or1k_d_bte),
-    .wb_or1k_d_dat_o     (wb_s2m_or1k_d_dat),
-    .wb_or1k_d_ack_o     (wb_s2m_or1k_d_ack),
-    .wb_or1k_d_err_o     (wb_s2m_or1k_d_err),
-    .wb_or1k_d_rty_o     (wb_s2m_or1k_d_rty),
     .wb_dbg_adr_i        (wb_m2s_dbg_adr),
     .wb_dbg_dat_i        (wb_m2s_dbg_dat),
     .wb_dbg_sel_i        (wb_m2s_dbg_sel),
@@ -170,6 +170,18 @@ wb_intercon wb_intercon0
     .wb_dbg_ack_o        (wb_s2m_dbg_ack),
     .wb_dbg_err_o        (wb_s2m_dbg_err),
     .wb_dbg_rty_o        (wb_s2m_dbg_rty),
+    .wb_or1k_d_adr_i     (wb_m2s_or1k_d_adr),
+    .wb_or1k_d_dat_i     (wb_m2s_or1k_d_dat),
+    .wb_or1k_d_sel_i     (wb_m2s_or1k_d_sel),
+    .wb_or1k_d_we_i      (wb_m2s_or1k_d_we),
+    .wb_or1k_d_cyc_i     (wb_m2s_or1k_d_cyc),
+    .wb_or1k_d_stb_i     (wb_m2s_or1k_d_stb),
+    .wb_or1k_d_cti_i     (wb_m2s_or1k_d_cti),
+    .wb_or1k_d_bte_i     (wb_m2s_or1k_d_bte),
+    .wb_or1k_d_dat_o     (wb_s2m_or1k_d_dat),
+    .wb_or1k_d_ack_o     (wb_s2m_or1k_d_ack),
+    .wb_or1k_d_err_o     (wb_s2m_or1k_d_err),
+    .wb_or1k_d_rty_o     (wb_s2m_or1k_d_rty),
     .wb_or1k_i_adr_i     (wb_m2s_or1k_i_adr),
     .wb_or1k_i_dat_i     (wb_m2s_or1k_i_dat),
     .wb_or1k_i_sel_i     (wb_m2s_or1k_i_sel),
@@ -254,6 +266,18 @@ wb_intercon wb_intercon0
     .wb_green_leds_ack_i (wb_s2m_green_leds_ack),
     .wb_green_leds_err_i (wb_s2m_green_leds_err),
     .wb_green_leds_rty_i (wb_s2m_green_leds_rty),
+    .wb_arduino_adr_o    (wb_m2s_arduino_adr),
+    .wb_arduino_dat_o    (wb_m2s_arduino_dat),
+    .wb_arduino_sel_o    (wb_m2s_arduino_sel),
+    .wb_arduino_we_o     (wb_m2s_arduino_we),
+    .wb_arduino_cyc_o    (wb_m2s_arduino_cyc),
+    .wb_arduino_stb_o    (wb_m2s_arduino_stb),
+    .wb_arduino_cti_o    (wb_m2s_arduino_cti),
+    .wb_arduino_bte_o    (wb_m2s_arduino_bte),
+    .wb_arduino_dat_i    (wb_s2m_arduino_dat),
+    .wb_arduino_ack_i    (wb_s2m_arduino_ack),
+    .wb_arduino_err_i    (wb_s2m_arduino_err),
+    .wb_arduino_rty_i    (wb_s2m_arduino_rty),
     .wb_hex_adr_o        (wb_m2s_hex_adr),
     .wb_hex_dat_o        (wb_m2s_hex_dat),
     .wb_hex_sel_o        (wb_m2s_hex_sel),

@@ -48,7 +48,7 @@ module orpsoc_top #(
   output [6:0]  hex2,
   output [6:0]  hex3,
   inout [7:0]   raspberry_io,
-
+  inout [7:0]   arduino_io,
 
 `ifdef SIM
   output        tdo_pad_o,
@@ -836,6 +836,91 @@ wb_data_resize wb_data_resize_raspberry (
   .wbs_ack_i  (wb8_s2m_raspberry_ack),
   .wbs_err_i  (wb8_s2m_raspberry_err),
   .wbs_rty_i  (wb8_s2m_raspberry_rty)
+);
+
+
+////////////////////////////////////////////////////////////////////////
+//
+// ARDUINO
+//
+////////////////////////////////////////////////////////////////////////
+
+wire [7:0]  arduino_in;
+wire [7:0]  arduino_out;
+wire [7:0]  arduino_dir;
+
+wire [31:0]   wb8_m2s_arduino_adr;
+wire [1:0]  wb8_m2s_arduino_bte;
+wire [2:0]  wb8_m2s_arduino_cti;
+wire    wb8_m2s_arduino_cyc;
+wire [7:0]  wb8_m2s_arduino_dat;
+wire    wb8_m2s_arduino_stb;
+wire    wb8_m2s_arduino_we;
+wire [7:0]    wb8_s2m_arduino_dat;
+wire    wb8_s2m_arduino_ack;
+wire    wb8_s2m_arduino_err;
+wire    wb8_s2m_arduino_rty;
+
+// Tristate logic for IO
+// 0 = input, 1 = output
+generate
+  for (i = 0; i < 8; i = i+1) begin: arduino_tris
+    assign arduino_io[i] = arduino_dir[i] ? arduino_out[i] : 1'bz;
+    assign arduino_in[i] = arduino_dir[i] ? arduino_out[i] : arduino_io[i];
+  end
+endgenerate
+
+gpio arduino (
+  // GPIO bus
+  .gpio_i     (arduino_in),
+  .gpio_o     (arduino_out),
+  .gpio_dir_o   (arduino_dir),
+
+  // Wishbone slave interface
+  .wb_adr_i   (wb8_m2s_arduino_adr[0]),
+  .wb_dat_i   (wb8_m2s_arduino_dat),
+  .wb_we_i  (wb8_m2s_arduino_we),
+  .wb_cyc_i   (wb8_m2s_arduino_cyc),
+  .wb_stb_i   (wb8_m2s_arduino_stb),
+  .wb_cti_i   (wb8_m2s_arduino_cti),
+  .wb_bte_i   (wb8_m2s_arduino_bte),
+  .wb_dat_o   (wb8_s2m_arduino_dat),
+  .wb_ack_o   (wb8_s2m_arduino_ack),
+  .wb_err_o   (wb8_s2m_arduino_err),
+  .wb_rty_o   (wb8_s2m_arduino_rty),
+
+  .wb_clk     (wb_clk),
+  .wb_rst     (wb_rst)
+);
+
+// 32-bit to 8-bit wishbone bus resize
+wb_data_resize wb_data_resize_arduino (
+  // Wishbone Master interface
+  .wbm_adr_i  (wb_m2s_arduino_adr),
+  .wbm_dat_i  (wb_m2s_arduino_dat),
+  .wbm_sel_i  (wb_m2s_arduino_sel),
+  .wbm_we_i   (wb_m2s_arduino_we ),
+  .wbm_cyc_i  (wb_m2s_arduino_cyc),
+  .wbm_stb_i  (wb_m2s_arduino_stb),
+  .wbm_cti_i  (wb_m2s_arduino_cti),
+  .wbm_bte_i  (wb_m2s_arduino_bte),
+  .wbm_dat_o  (wb_s2m_arduino_dat),
+  .wbm_ack_o  (wb_s2m_arduino_ack),
+  .wbm_err_o  (wb_s2m_arduino_err),
+  .wbm_rty_o  (wb_s2m_arduino_rty),
+
+  // Wishbone Slave interface
+  .wbs_adr_o  (wb8_m2s_arduino_adr),
+  .wbs_dat_o  (wb8_m2s_arduino_dat),
+  .wbs_we_o   (wb8_m2s_arduino_we ),
+  .wbs_cyc_o  (wb8_m2s_arduino_cyc),
+  .wbs_stb_o  (wb8_m2s_arduino_stb),
+  .wbs_cti_o  (wb8_m2s_arduino_cti),
+  .wbs_bte_o  (wb8_m2s_arduino_bte),
+  .wbs_dat_i  (wb8_s2m_arduino_dat),
+  .wbs_ack_i  (wb8_s2m_arduino_ack),
+  .wbs_err_i  (wb8_s2m_arduino_err),
+  .wbs_rty_i  (wb8_s2m_arduino_rty)
 );
 
 
