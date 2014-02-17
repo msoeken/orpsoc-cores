@@ -142,8 +142,8 @@ orpsoc_top dut
 	.sys_clk_pad_i		(clk),
 	.rst_n_pad_i		(rst_n),
 
-	.red_leds_io  		(),
-	.green_leds_io		(),
+	//.red_leds_io  		(),
+	//.green_leds_io		(),
   .hex0             (),
   .hex1             (),
   .hex2             (),
